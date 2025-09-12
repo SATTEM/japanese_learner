@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="Guess" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="./css/random.css">
+	<title>随机50音</title>
+</head>
+<body>
+	<h1 style="text-align: center;">目前支持20个假名：根据显示的假名，输入对应的读音</h1>
+	<div id="display">
+		<!--可修改部分-->
+		<p id="character_on_display">a</p>
+
+		<button type="submit" onclick="LaunchAGuess()">换一个</button>
+	</div>
+	<div id="submission">
+		<input type="text" id="submit_text">
+		<button type="submit" id="submit_button">确定</button>
+	</div>
+	<!--绑定javascript-->
+	<script src="./js/random50.js"></script>
+</body>
+</html>
