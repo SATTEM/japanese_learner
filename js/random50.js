@@ -127,10 +127,9 @@ let CheckParamsValid = function(){
 	}
 }()
 
-function LaunchAGuess(show_type,answer_type,range){
+function LaunchAGuess({show_type,answer_type,range}={}){
 	/**以show给出的形式随机显示range范围内的假名
-	 *同时将answer给出的形式视为正确答案
-	 */
+	 *同时将answer给出的形式视为正确答案*/
 	let char=GetRandomJPChar(range);//获取随机假名
 	SetCharacterOnDislay(char,show_type);//设置显示
 	let correct_answer=GetAnswer(char,answer_type);//获取正确答案
@@ -138,7 +137,7 @@ function LaunchAGuess(show_type,answer_type,range){
 		let answer=document.getElementById("submit_text").value;//获取答案
 		if(correct_answer===answer){
 			alert("正确!");
-			LaunchAGuess();//进行下一次猜测
+			LaunchAGuess(CheckParamsValid());//进行下一次猜测
 		}else{
 			alert("错误!答案是:"+correct_answer);
 		}
@@ -172,16 +171,22 @@ let ChangeType =function(target){
 			return;
 		}
 		let new_params=CheckParamsValid({[target]:target_type});
-		LaunchAGuess(new_params.show_type,new_params.answer_type,new_params.range);
+		LaunchAGuess(new_params);
 	}
 }
+//绑定配置面板
 show_type_group.addEventListener("change",ChangeType("show_type"));
 answer_type_group.addEventListener("change",ChangeType("answer_type"));
 char_range.addEventListener("change",function(event){
 	const range=event.target.value;
 	let new_params=CheckParamsValid(undefined,undefined,range);
-	LaunchAGuess(new_params.show_type,new_params.answer_type,new_params.range);
+	LaunchAGuess(new_params);
 })
-let default_params=CheckParamsValid();
+//绑定刷新按钮
+document.getElementById("refresh_button").addEventListener("click",function(){
+	LaunchAGuess(CheckParamsValid());
+});
+
+let default_params=CheckParamsValid();//默认参数
 document.addEventListener("DOMContentLoaded", 
-	LaunchAGuess(default_params.show_type,default_params.answer_type,default_params.range));//一进入页面就开始猜测
+	LaunchAGuess(default_params));//一进入页面就开始猜测

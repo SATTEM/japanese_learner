@@ -12,7 +12,7 @@
 		<!--显示日语部分-->
 		<p id="character_on_display">a</p>
 
-		<button type="submit" onclick="LaunchAGuess()">换一个</button>
+		<button type="submit" id="refresh_button">换一个</button>
 	</div>
 	<div id="submission">
 		<input type="text" id="submit_text">
@@ -33,7 +33,7 @@
 			<input type="radio" name="answer_type" value="answer_s" checked> 罗马音
 		</div>
 		<p>假名范围1~45</p>
-		<input type="number" id="char_range" min="1" max="45"> 
+		<input type="number" id="char_range" min="1" max="45" value="20"> 
 	</div>
 	<!--绑定javascript-->
 	<script src="./js/random50.js"></script>
