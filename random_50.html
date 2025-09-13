@@ -7,9 +7,9 @@
 	<title>随机50音</title>
 </head>
 <body>
-	<h1 style="text-align: center;">目前支持20个假名：根据显示的假名，输入对应的读音</h1>
+	<h1 style="text-align: center;">根据题目给出对应的答案</h1>
 	<div id="display">
-		<!--可修改部分-->
+		<!--显示日语部分-->
 		<p id="character_on_display">a</p>
 
 		<button type="submit" onclick="LaunchAGuess()">换一个</button>
@@ -17,6 +17,23 @@
 	<div id="submission">
 		<input type="text" id="submit_text">
 		<button type="submit" id="submit_button">确定</button>
+	</div>
+	<div id="controller">
+		<!--控制部分-->
+		<div id="show_panel">
+			<p>显示形式</p>
+			<input type="radio" name="show_type" value="show_h" checked> 平假名
+			<input type="radio" name="show_type" value="show_k"> 片假名
+			<input type="radio" name="show_type" value="show_s"> 罗马音
+		</div>
+		<div id="answer_panel">
+			<p>答案形式</p>
+			<input type="radio" name="answer_type" value="answer_h"> 平假名
+			<input type="radio" name="answer_type" value="answer_k"> 片假名
+			<input type="radio" name="answer_type" value="answer_s" checked> 罗马音
+		</div>
+		<p>假名范围1~45</p>
+		<input type="number" id="char_range" min="1" max="45"> 
 	</div>
 	<!--绑定javascript-->
 	<script src="./js/random50.js"></script>

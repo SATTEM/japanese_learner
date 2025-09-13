@@ -1,4 +1,5 @@
 function GetRandomInt(min,max){
+	/*获取[min,max]随机整数*/
 	return Math.floor(Math.random()*max)+min;
 }
 
@@ -18,18 +19,14 @@ class JPChar{
 	get katakana(){
 		return this.katakana_;
 	}
-	IsSameAs(item){
-		//判断item是否是该字符
-		return (item===this.hiragana_)||(item===this.katakana_)||(item===this.sound_);
-	}
 	toString(){
 		return "("+this.hiragana_+";"+this.sound_+";"+this.katakana_+")";
 	}
 }
 
 let GetRandomJPChar = function (){
-	//获取一个随机的假名
-	//静态变量：50音数组
+	/*获取一个随机的假名*/
+	//静态变量：50音数组 45个元素
 	const map=[
 		new JPChar("あ", "a", "ア"),
 		new JPChar("い", "i", "イ"),
@@ -83,6 +80,7 @@ let GetRandomJPChar = function (){
 }();
 
 function SetCharacterOnDislay(char,type){
+	/*设置显示的字符*/
 	let display=document.getElementById("character_on_display");//获取显示元素
 	if(display===null){console.error("[Error]: Fail to find display box!");return;}
 	//设置显示的形式
@@ -99,7 +97,7 @@ function SetCharacterOnDislay(char,type){
 }
 
 function GetAnswer(char,type){
-	//根据传入字符和形式，返回一个判断函数
+	/*根据传入字符和形式，返回一个判断函数*/
 	let answer;
 	if(type==="h"){
 		answer=char.hiragana;
@@ -114,15 +112,25 @@ function GetAnswer(char,type){
 	return answer;
 }
 
-function LaunchAGuess(){
-	/*将假名以show给出的形式显示
-	*同时将answer给出的形式视为正确答案*/
-	let answer_type="s",show_type="h",range=20;
-
-	if(answer_type==show_type){
-		//答案与题目形式不应该一样
-		console.error("[Error]: Identical answer and problem!");
+let CheckParamsValid = function(){
+	/*检查参数合法性*/ 
+	let now_show_type="h",now_answer_type="s",now_range=20;	
+	return function({show_type,answer_type,range}={}){
+		//如果有参数调用则更更新参数，无则沿用
+		if(show_type==undefined){show_type=now_show_type;}
+		else{now_show_type=show_type;}
+		if(answer_type==undefined){answer_type=now_answer_type;}
+		else{now_answer_type=answer_type;}
+		if(range==undefined){range=now_range;}
+		else{now_range=range;}
+		return {show_type:show_type,answer_type:answer_type,range:range};
 	}
+}()
+
+function LaunchAGuess(show_type,answer_type,range){
+	/**以show给出的形式随机显示range范围内的假名
+	 *同时将answer给出的形式视为正确答案
+	 */
 	let char=GetRandomJPChar(range);//获取随机假名
 	SetCharacterOnDislay(char,show_type);//设置显示
 	let correct_answer=GetAnswer(char,answer_type);//获取正确答案
@@ -137,4 +145,43 @@ function LaunchAGuess(){
 	}
 }
 
-document.addEventListener("DOMContentLoaded", LaunchAGuess());//一进入页面就开始猜测
+//绑定
+const show_type_group=document.getElementById("show_panel");
+const answer_type_group=document.getElementById("answer_panel");
+const char_range=document.getElementById("char_range");
+let ChangeType =function(target){
+	/*检查target输入是否合法*/
+	//确定修改的目标和需要比较的目标
+	let compare_target;
+	if(target==="answer_type"){
+		compare_target="show_type";
+	}else if(target==="show_type"){
+		compare_target="answer_type";
+	}
+	return function(event){
+		let target_type = event.target.value.toString().slice(-1);//截取最后一位标识符
+		let old_params=CheckParamsValid();
+		if(old_params[compare_target]===target_type){
+			//不合法的输入，回退
+			target_type=old_params[target];
+			const all_radio=document.querySelectorAll('input[name="'+target+'"]')//遍历所有target对应的按钮
+			all_radio.forEach(radio=>{
+				radio.checked=(radio.value.toString().slice(-1)===target_type);//重新选中原来的按钮
+			})	
+			alert("显示形式和答案形式不能相同！");
+			return;
+		}
+		let new_params=CheckParamsValid({[target]:target_type});
+		LaunchAGuess(new_params.show_type,new_params.answer_type,new_params.range);
+	}
+}
+show_type_group.addEventListener("change",ChangeType("show_type"));
+answer_type_group.addEventListener("change",ChangeType("answer_type"));
+char_range.addEventListener("change",function(event){
+	const range=event.target.value;
+	let new_params=CheckParamsValid(undefined,undefined,range);
+	LaunchAGuess(new_params.show_type,new_params.answer_type,new_params.range);
+})
+let default_params=CheckParamsValid();
+document.addEventListener("DOMContentLoaded", 
+	LaunchAGuess(default_params.show_type,default_params.answer_type,default_params.range));//一进入页面就开始猜测
