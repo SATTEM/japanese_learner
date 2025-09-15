@@ -4,10 +4,15 @@
 	padding: 0;
 }
 
-#start_button{
-	position: absolute;
-	width: 10rem;
-	height: 3rem;
-	top: 50%;
-	left: 50%;
+#button_field{
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+#button_field > button{
+	margin: 2rem;
+	width: 20rem;
+	height: 5rem;
 }

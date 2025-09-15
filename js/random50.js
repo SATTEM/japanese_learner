@@ -180,13 +180,22 @@ answer_type_group.addEventListener("change",ChangeType("answer_type"));
 char_range.addEventListener("change",function(event){
 	const range=event.target.value;
 	let new_params=CheckParamsValid({undefined,undefined,range});
+	if(new_params.range==range){
+		//非法输入
+		event.target.value=new_params.range;
+	}
 	LaunchAGuess(new_params);
 })
 //绑定刷新按钮
 document.getElementById("refresh_button").addEventListener("click",function(){
 	LaunchAGuess(CheckParamsValid());
 });
-
+//绑定回车事件
+document.addEventListener("keydown",function(event){
+	if(event.key === 'Enter'){
+		document.getElementById("submit_button").dispatchEvent(new Event("click"));
+	}
+})
 let default_params=CheckParamsValid();//默认参数
 document.addEventListener("DOMContentLoaded", 
 	LaunchAGuess(default_params));//一进入页面就开始猜测

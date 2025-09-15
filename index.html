@@ -7,10 +7,16 @@
 		<link rel="stylesheet" type="text/css" href="./css/main.css"> 
 	</head>
 	<body>
-		<button 
-		type="button" 
-		id="start_button"
-		onclick="ChangeToRandom50()">随机50音</button>
+		<div id="button_field">
+			<button 
+			type="button" 
+			id="random50_button"
+			onclick="ChangeToRandom50()">随机50音</button>
+			<button
+			type="button"
+			id="words_button"
+			onclick="ChangeToWords()">随机词汇</button>
+		</div>
 		<!--载入javascript脚本-->
 		<script src="./js/main.js"></script>
 	</body>
