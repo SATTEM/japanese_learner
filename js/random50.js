@@ -123,7 +123,7 @@ let CheckParamsValid = function(){
 		else{now_answer_type=answer_type;}
 		if(range==undefined){range=now_range;}
 		else{now_range=range;}
-		return {show_type:show_type,answer_type:answer_type,range:now_range};
+		return {show_type:show_type,answer_type:answer_type,range:range};
 	}
 }()
 
@@ -179,7 +179,7 @@ show_type_group.addEventListener("change",ChangeType("show_type"));
 answer_type_group.addEventListener("change",ChangeType("answer_type"));
 char_range.addEventListener("change",function(event){
 	const range=event.target.value;
-	let new_params=CheckParamsValid(undefined,undefined,range);
+	let new_params=CheckParamsValid({undefined,undefined,range});
 	LaunchAGuess(new_params);
 })
 //绑定刷新按钮
