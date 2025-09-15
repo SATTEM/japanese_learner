@@ -49,7 +49,7 @@ let GetRandomJPChar = function (){
 		new JPChar("て", "te", "テ"),
 		new JPChar("と", "to", "ト"),
 		new JPChar("な", "na", "ナ"),
-		new JPChar("に", "ɲi", "ニ"),
+		new JPChar("に", "ni", "ニ"),
 		new JPChar("ぬ", "nu", "ヌ"),
 		new JPChar("ね", "ne", "ネ"),
 		new JPChar("の", "no", "ノ"),
