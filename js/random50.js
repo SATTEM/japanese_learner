@@ -123,7 +123,7 @@ let CheckParamsValid = function(){
 		else{now_answer_type=answer_type;}
 		if(range==undefined){range=now_range;}
 		else{now_range=range;}
-		return {show_type:show_type,answer_type:answer_type,range:range};
+		return {show_type:show_type,answer_type:answer_type,range:now_range};
 	}
 }()
 
